@@ -1,8 +1,8 @@
-export default function SearchBar() {
+export default function SearchBar({onSearch}) {
    return (
       <div>
          <input type='search' />
-         <button>Agregar</button>
+         <button onClick={onSearch}>Agregar</button>
       </div>
    );
 }

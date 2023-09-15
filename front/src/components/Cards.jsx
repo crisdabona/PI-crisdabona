@@ -8,6 +8,7 @@ export default function Cards({data}){
                key={el.id}
                name={el.name}
                species={el.species}
+               status={el.status}
                gender={el.gender}
                origin={el.origin.name}
                image={el.image}

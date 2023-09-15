@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <SearchBar />
+      <SearchBar onSearch={(charactersID) => window.alert(charactersID)}/>
       <Cards data={characters}/>
     </>
   )
