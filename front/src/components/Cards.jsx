@@ -1,6 +1,6 @@
 import Card from './Card';
 
-export default function Cards({data}){
+export default function Cards({data, onClose}){
    return (
       <div>
          {data.map((el) => (
@@ -12,7 +12,7 @@ export default function Cards({data}){
                gender={el.gender}
                origin={el.origin.name}
                image={el.image}
-               onClose={() => window.alert('Emulamos que se cierra la card')}
+               onClose={() => onClose(el.id)}
             />
          ))}
       </div>
