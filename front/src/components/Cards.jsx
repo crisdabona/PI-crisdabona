@@ -1,4 +1,5 @@
 import Card from './Card';
+import Nav from './Nav';
 
 export default function Cards({data, onClose}){
    return (
