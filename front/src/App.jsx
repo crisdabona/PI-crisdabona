@@ -1,15 +1,38 @@
 import './App.css'
 import Cards from './components/Cards.jsx';
 import Nav from './components/Nav';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import axios  from 'axios';
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, useLocation, useNavigate} from 'react-router-dom'
 import About from './components/About';
 import Detail from './components/Detail';
 import Error from './components/Error'
+import Form from './components/Form';
 
 function App() {
   const [characters, setCharacters] = useState([])
+
+  const navigate = useNavigate()
+  const [access, setAccess] = useState(false)
+  let EMAIL = 'cdvillabonabr@gmail.com'
+  let PASSWORD = 'cris123'
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  }
+
+  function login(userData) {
+    if (userData.password === PASSWORD && userData.email === EMAIL) {
+       setAccess(true)
+       navigate('/home')
+    }
+ }
+
+ useEffect(() => {
+  !access && navigate('/');
+}, [access])
 
   const onSearch = (id) => {
     const alreadyAdded = characters.some(character => character.id === parseInt(id))
@@ -33,15 +56,19 @@ function App() {
     const updatedCharacters = characters.filter((character) => character.id !== parseInt(id))
     setCharacters(updatedCharacters)
   }
+
+  const location = useLocation()
+  const renderNav = location.pathname !== '/'
   
   return (
     <>
-      <Nav onSearch={onSearch}/>
+      { renderNav ? <Nav onSearch={onSearch} isAuthenticated={isAuthenticated} handleLogout={handleLogout}/>: null}
       <Routes>
-        <Route path="/" element={<Cards data={characters} onClose={onClose} />}/>
+        <Route path="/home" element={<Cards data={characters} onClose={onClose} />}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/detail/:id' element={<Detail/>}/>
         <Route path="*" element={<Error />} />
+        <Route path='/' element={<Form login={login}/>}/>
       </Routes>
     </>
   )

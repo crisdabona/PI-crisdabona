@@ -1,17 +1,30 @@
 import React from 'react'
 import SearchBar from './SearchBar'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-const Nav = ({onSearch}) => {
+const Nav = ({onSearch, isAuthenticated, handleLogout}) => {
+  const navigate = useNavigate()
+  
+  const handleLogoutClick = () => {
+    handleLogout()
+    navigate('/')
+  }
+
   return (
     <nav>
         <Link to={'./about'}>
           <button>About</button>
         </Link>
 
-        <Link to={'./'}>
+        <Link to={'./home'}>
           <button>Home</button>
         </Link>
+
+        {isAuthenticated && (
+        <button onClick={handleLogoutClick}>
+          Log out
+        </button>
+      )}
         
         <SearchBar onSearch={onSearch}/>
 
