@@ -1,32 +1,32 @@
-export const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const validEmail = emailRegex.test(email);
-    const maxLengthExceeded = email.length > 35;
-  
-    const errors = {};
-  
-    if (!validEmail) {
-      errors.email = 'No es un email válido';
-    }
-  
-    if (maxLengthExceeded) {
-      errors.email = 'El email debe tener como máximo 35 caracteres';
-    }
-  
-    return errors;
-  };
-  
-  export const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[0-9])[a-zA-Z0-9]{6,10}$/;
-    const validPassword = passwordRegex.test(password);
-  
-    const errors = {};
-  
-    if (!validPassword) {
-      errors.password = 'La contraseña debe tener al menos un número y una longitud entre 6 y 10 caracteres';
-    }
-  
-    return errors;
-  };
-  
-  
+const validation = (userData) =>{
+  const errors = {}
+
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData.email)){
+    errors.email = 'No es un email valido'
+  }
+
+  if(userData.length > 36){
+    errors.email = 'Debe ser menor que 35 caracteres'
+  }
+
+  if(userData.email === ''){
+    errors.email = 'El campo no puede estar vacío'
+  }
+
+  if(!/\d/.test(userData.password)){
+    errors.password = 'Debe contener al menos un número'
+  }
+
+  if(userData.password.length <= 6){
+    errors.password = 'Debe tener al menos 6 caracteres'
+  }
+
+  if(userData.password.length > 10){
+    errors.password = 'No puede ser mayor a 10 caracteres'
+  }
+
+
+  return errors
+}
+
+export default validation

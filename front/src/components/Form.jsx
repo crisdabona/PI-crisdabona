@@ -1,6 +1,6 @@
-import React from 'react'
-import { useState } from 'react'
-import {validateEmail, validatePassword} from '../validation.js'
+import { useEffect, useState } from 'react'
+import validation from '../validation.js'
+
 const Form = ({login}) => {
   const [userData, setUserData] = useState({
     email: '',
@@ -14,8 +14,14 @@ const Form = ({login}) => {
       ...userData,
       [event.target.name]: event.target.value
     })
-
   }
+
+  useEffect(() => {
+    if(userData.email !== '' || userData.password !== ''){
+      const userValidated = validation(userData)
+      setErrors(userValidated)
+    }
+  }, [userData])
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -23,11 +29,11 @@ const Form = ({login}) => {
 
 }
 
-const handleValidation = () => {
-  const emailErrors = validateEmail(userData.email);
-  const passwordErrors = validatePassword(userData.password);
-  setErrors({ ...emailErrors, ...passwordErrors });
-}
+/*   const handleValidation = () => {
+    const emailErrors = validateEmail(userData.email);
+    const passwordErrors = validatePassword(userData.password);
+    setErrors({ ...emailErrors, ...passwordErrors });
+} */
 
   return (
     <form onSubmit={onSubmit}>
@@ -37,7 +43,6 @@ const handleValidation = () => {
           name='email'
           value={userData.email}
           onChange={handleChange}
-          onBlur={handleValidation}
           />
         <div style={{ marginBottom: '20px' }}>
           <p style={{ height: errors.email ? '20px' : '0', overflow: 'hidden', color: 'red', transition: 'height 0.3s ease' }}>
@@ -52,7 +57,6 @@ const handleValidation = () => {
           name='password'
           value={userData.password}
           onChange={handleChange}
-          onBlur={handleValidation}
           />
         <div style={{ marginBottom: '20px' }}>
           <p style={{ height: errors.password ? '20px' : '0', overflow: 'hidden', color: 'red', transition: 'height 0.3s ease' }}>

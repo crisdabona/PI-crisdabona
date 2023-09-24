@@ -8,6 +8,7 @@ import About from './components/About';
 import Detail from './components/Detail';
 import Error from './components/Error'
 import Form from './components/Form';
+import Favorites from './components/Favorites';
 
 function App() {
   const [characters, setCharacters] = useState([])
@@ -55,20 +56,21 @@ function App() {
   const onClose = (id) => {
     const updatedCharacters = characters.filter((character) => character.id !== parseInt(id))
     setCharacters(updatedCharacters)
+    
   }
 
-  const location = useLocation()
-  const renderNav = location.pathname !== '/'
+  const {pathname} = useLocation()
   
   return (
     <>
-      { renderNav ? <Nav onSearch={onSearch} isAuthenticated={isAuthenticated} handleLogout={handleLogout}/>: null}
+      { pathname !== '/' && <Nav onSearch={onSearch} isAuthenticated={isAuthenticated} handleLogout={handleLogout}/>}
       <Routes>
         <Route path="/home" element={<Cards data={characters} onClose={onClose} />}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/detail/:id' element={<Detail/>}/>
         <Route path="*" element={<Error />} />
         <Route path='/' element={<Form login={login}/>}/>
+        <Route path="/favorites" element={<Favorites myFavorites={characters}/>} />
       </Routes>
     </>
   )

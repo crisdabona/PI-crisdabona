@@ -19,6 +19,9 @@ const Nav = ({onSearch, isAuthenticated, handleLogout}) => {
         <Link to={'./home'}>
           <button>Home</button>
         </Link>
+        <Link to={'./favorites'}>
+          <button>favorites</button>
+        </Link>
 
         {isAuthenticated && (
         <button onClick={handleLogoutClick}>
