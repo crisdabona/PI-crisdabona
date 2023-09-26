@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addFav, removeFav } from "../redux/actions";
 import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom'
 
 const Card = ({ id, name, image, onClose }) => {
   const [isFav, setIsFav] = useState(false)
   const dispatch = useDispatch()
+  const {pathname} = useLocation()
   const myFavorites = useSelector((state) => state.myFavorites)
 
   const handleFavorite = () => {
@@ -14,12 +16,12 @@ const Card = ({ id, name, image, onClose }) => {
       dispatch(removeFav(id));
     } else {
       setIsFav(true)
-      dispatch(addFav({ id, name, image }))
+      dispatch(addFav({ name, image, onClose, id }))
     }
   }
 
   useEffect(() => {
-    myFavorites.forEach((fav) => {
+    myFavorites?.forEach((fav) => {
       if (fav.id === id) {
         setIsFav(true)
       }
@@ -28,16 +30,21 @@ const Card = ({ id, name, image, onClose }) => {
 
   return (
     <div>
-      <button onClick={() => onClose(id)}>X</button>
-      <Link to={`/detail/${id}`}>
-        <h3>{name}</h3>
-      </Link>
-      <img src={image} alt={name} />
       {isFav ? (
         <button onClick={handleFavorite}>❤️</button>
       ) : (
         <button onClick={handleFavorite}>🤍</button>
       )}
+      {
+        pathname !== '/favorites'
+        ? <button onClick={() => onClose(id)}>X</button>
+        : ''
+      }
+      
+      <Link to={`/detail/${id}`}>
+        <h3>{name}</h3>
+      </Link>
+      <img src={image} alt={name} />
     </div>
   );
 };
