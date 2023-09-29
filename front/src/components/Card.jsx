@@ -4,7 +4,7 @@ import { addFav, removeFav } from "../redux/actions";
 import { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom'
 
-const Card = ({ id, name, image, onClose }) => {
+const Card = ({ id, name, image, onClose, gender }) => {
   const [isFav, setIsFav] = useState(false)
   const dispatch = useDispatch()
   const {pathname} = useLocation()
@@ -16,7 +16,7 @@ const Card = ({ id, name, image, onClose }) => {
       dispatch(removeFav(id));
     } else {
       setIsFav(true)
-      dispatch(addFav({ name, image, onClose, id }))
+      dispatch(addFav({ name, image, onClose, id, gender }))
     }
   }
 
@@ -26,7 +26,7 @@ const Card = ({ id, name, image, onClose }) => {
         setIsFav(true)
       }
     });
-  }, [myFavorites, id])
+  }, [myFavorites])
 
   return (
     <div>
@@ -44,6 +44,7 @@ const Card = ({ id, name, image, onClose }) => {
       <Link to={`/detail/${id}`}>
         <h3>{name}</h3>
       </Link>
+      <p>{gender}</p>
       <img src={image} alt={name} />
     </div>
   );

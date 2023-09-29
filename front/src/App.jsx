@@ -70,7 +70,7 @@ function App() {
         <Route path='/detail/:id' element={<Detail/>}/>
         <Route path="*" element={<Error />} />
         <Route path='/' element={<Form login={login}/>}/>
-        <Route path="/favorites" element={<Favorites myFavorites={characters}/>} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </>
   )
