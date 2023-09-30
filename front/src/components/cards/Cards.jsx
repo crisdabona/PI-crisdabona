@@ -1,8 +1,8 @@
-import Card from './Card';
+import Card from '../card/Card';
 
 export default function Cards({data, onClose}){
    return (
-      <div>
+      <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
          {data.map((el) => (
             <Card
                key={el.id}

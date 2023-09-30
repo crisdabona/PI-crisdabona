@@ -1,0 +1,18 @@
+.body-nav{
+    background-color: #23242A;
+}
+
+.containerNav{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #23242A;
+    border-bottom: solid 2px #13F607;
+}
+
+.containerNav button{
+    width: 120px;
+    margin: 0 10px
+}

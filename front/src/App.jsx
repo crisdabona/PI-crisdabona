@@ -1,14 +1,13 @@
-import './App.css'
-import Cards from './components/Cards.jsx';
-import Nav from './components/Nav';
+import Cards from './components/cards/Cards.jsx';
+import Nav from './components/nav/Nav';
 import { useState , useEffect} from 'react';
 import axios  from 'axios';
 import {Routes, Route, useLocation, useNavigate} from 'react-router-dom'
-import About from './components/About';
-import Detail from './components/Detail';
-import Error from './components/Error'
-import Form from './components/Form';
-import Favorites from './components/Favorites';
+import About from './components/about/About';
+import Detail from './components/detail/Detail';
+import Error from './components/error/Error'
+import Form from './components/form/Form';
+import Favorites from './components/favorites/Favorites';
 
 function App() {
   const [characters, setCharacters] = useState([])
@@ -62,7 +61,7 @@ function App() {
   const {pathname} = useLocation()
   
   return (
-    <>
+    <div>
       { pathname !== '/' && <Nav onSearch={onSearch} isAuthenticated={isAuthenticated} handleLogout={handleLogout}/>}
       <Routes>
         <Route path="/home" element={<Cards data={characters} onClose={onClose} />}/>
@@ -72,7 +71,7 @@ function App() {
         <Route path='/' element={<Form login={login}/>}/>
         <Route path="/favorites" element={<Favorites />} />
       </Routes>
-    </>
+    </div>
   )
 }
 
