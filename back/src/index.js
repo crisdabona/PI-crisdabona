@@ -1,22 +1,10 @@
-// const http = require('http')
-// const char = require('./controllers/getCharById')
-
-
-// http.createServer((req, res) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*')
-
-//     if(req.url.includes('/rickandmorty/character')){
-//         const id = req.url.split('/').pop()
-//         char(res, id)
-//     }
-
-
-
-// }).listen(3000, '127.0.0.1')
+require('dotenv').config()
+const {conn} = require('./DB_connection')
 const app = require('./app');
 const PORT = 3001;
 
 
 app.listen(PORT, () => {
+   conn.sync({force: true})
    console.log('Server raised in port: ' + PORT);
 });
